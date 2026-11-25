@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casa Mia | Catálogo de Casas</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("imagenes/fondo-casa.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #ffffff;
+      padding-bottom: 85px;
+    }
+
+    /* Barra superior */
+    .barra-superior {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background-color: rgba(20, 20, 20, 0.88);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 30px;
+      border-bottom: 2px solid #1b7a3d;
+      z-index: 30;
+    }
+
+    .marca {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .menu-apartados {
+      display: flex;
+      gap: 18px;
+    }
+
+    .menu-apartados a {
+      color: #f0f0f0;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .menu-apartados a:hover,
+    .menu-apartados a.activo {
+      background-color: #1b7a3d;
+      color: #ffffff;
+    }
+
+    /* Contenido del Catálogo */
+    .contenedor {
+      max-width: 1380px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .encabezado-seccion {
+      background-color: rgba(255, 255, 255, 0.94);
+      color: #222222;
+      padding: 24px 28px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .encabezado-seccion h1 {
+      color: #1b7a3d;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .encabezado-seccion p {
+      color: #444444;
+      font-size: 15px;
+    }
+
+    .acciones-encabezado {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .contador-propiedades {
+      background-color: #f0f5f2;
+      color: #1b7a3d;
+      border: 1px solid #b8d8c3;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .btn-borrar-filtros {
+      background-color: #d93025;
+      color: #ffffff;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      display: none;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .btn-borrar-filtros.visible {
+      display: inline-block;
+    }
+
+    .btn-borrar-filtros:hover {
+      background-color: #b5231a;
+      transform: translateY(-1px);
+    }
+
+    /* Panel de Filtros y Orden */
+    .panel-filtros {
+      background-color: rgba(255, 255, 255, 0.96);
+      color: #222222;
+      padding: 20px 24px;
+      border-radius: 14px;
+      margin-bottom: 26px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .grid-filtros {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr) auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .campo-filtro {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .campo-filtro label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #1b7a3d;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .campo-filtro input,
+    .campo-filtro select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #222222;
+      background-color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .campo-filtro input:focus,
+    .campo-filtro select:focus {
+      border-color: #1b7a3d;
+      box-shadow: 0 0 0 2px rgba(27, 122, 61, 0.16);
+    }
+
+    .btn-aplicar {
+      background-color: #1b7a3d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 22px;
+      height: 39px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .btn-aplicar:hover {
+      background-color: #145e2e;
+      transform: translateY(-1px);
+    }
+
+    .grid-casas {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .tarjeta-casa {
+      background-color: rgba(255, 255, 255, 0.96);
+      color: #222222;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease;
+    }
+
+    .tarjeta-casa:hover {
+      transform: translateY(-4px);
+    }
+
+    .portada-casa {
+      position: relative;
+      height: 195px;
+      background-color: #d8dee4;
+    }
+
+    .portada-casa img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .etiqueta-estado {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: rgba(20, 20, 20, 0.85);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+
+    .info-casa {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .precio {
+      font-size: 21px;
+      font-weight: bold;
+      color: #1b7a3d;
+      margin-bottom: 4px;
+    }
+
+    .titulo-casa {
+      font-size: 17px;
+      font-weight: bold;
+      color: #111111;
+      margin-bottom: 6px;
+    }
+
+    .ubicacion-corta {
+      font-size: 13px;
+      color: #555555;
+      margin-bottom: 12px;
+    }
+
+    .resumen-ficha {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .pill-dato {
+      background-color: #f0f5f2;
+      color: #1b7a3d;
+      border: 1px solid #cce0d3;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .pagos-resumen {
+      font-size: 12px;
+      color: #333333;
+      border-top: 1px solid #e6e6e6;
+      padding-top: 10px;
+      margin-bottom: 14px;
+    }
+
+    .pagos-resumen strong {
+      color: #111111;
+    }
+
+    .btn-visualizar {
+      display: block;
+      text-align: center;
+      background-color: #1b7a3d;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      letter-spacing: 0.8px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-visualizar:hover {
+      background-color: #145e2e;
+    }
+
+    .sin-resultados {
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #222222;
+      border-radius: 14px;
+      padding: 36px 24px;
+      text-align: center;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+      margin-top: 10px;
+    }
+
+    .sin-resultados h3 {
+      font-size: 20px;
+      color: #111111;
+      margin-bottom: 8px;
+    }
+
+    .sin-resultados p {
+      font-size: 14px;
+      color: #555555;
+    }
+
+    /* Footer */
+    .barra-contacto {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(4px);
+      color: #111111;
+      text-align: center;
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.9);
+      z-index: 25;
+    }
+
+    .barra-contacto p {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .barra-contacto span {
+      font-weight: normal;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 1220px) {
+      .grid-filtros {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .btn-aplicar {
+        grid-column: span 3;
+      }
+    }
+
+    @media (max-width: 1150px) {
+      .grid-casas {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid-filtros {
+        grid-template-columns: 1fr;
+      }
+      .btn-aplicar {
+        grid-column: span 1;
+      }
+      .grid-casas {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="barra-superior">
+    <a href="index.html" class="marca">Casa Mia</a>
+    <nav class="menu-apartados">
+      <a href="index.html" class="activo">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="contenedor">
+    <div class="encabezado-seccion">
+      <div>
+        <h1>Catálogo de Propiedades</h1>
+        <p>Filtra por texto, rango de precio, recámaras o método de pago y presiona <strong>Aplicar</strong>.</p>
+      </div>
+      <div class="acciones-encabezado">
+        <span class="contador-propiedades" id="contador-propiedades">Mostrando 0 propiedades</span>
+        <button type="button" class="btn-borrar-filtros" id="btn-borrar-filtros" onclick="borrarTodosLosFiltros()">
+          Borrar todos los filtros
+        </button>
+      </div>
+    </div>
+
+    <section class="panel-filtros" aria-label="Filtros y orden del catálogo">
+      <div class="grid-filtros">
+        <div class="campo-filtro">
+          <label for="filtro-texto">Buscar por texto</label>
+          <input type="text" id="filtro-texto" placeholder="Ej. Arboledas, portón..." onkeydown="manejarEnterFiltro(event)" />
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtro-precio">Rango de precio</label>
+          <select id="filtro-precio">
+            <option value="">Todos los precios</option>
+            <option value="1m-1.5m">$1,000,000 a $1,500,000</option>
+            <option value="1.6m-2.5m">$1,600,000 a $2,500,000</option>
+            <option value="2.6m-3.5m">$2,600,000 a $3,500,000</option>
+            <option value="3.5m-plus">Más de $3,500,000</option>
+          </select>
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtro-recamaras">Recámaras</label>
+          <select id="filtro-recamaras">
+            <option value="">Cualquiera</option>
+            <option value="1">1 recámara</option>
+            <option value="2">2 recámaras</option>
+            <option value="3">3 recámaras</option>
+            <option value="4">4 recámaras</option>
+            <option value="5">5 recámaras</option>
+            <option value="6">6 recámaras</option>
+          </select>
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtro-pago">Método de pago</label>
+          <select id="filtro-pago">
+            <option value="">Todos los métodos</option>
+            <option value="infonavit">Infonavit</option>
+            <option value="fovissste">Fovissste</option>
+            <option value="bancario">Crédito Hipotecario Bancario</option>
+            <option value="contado">Compra de Contado</option>
+          </select>
+        </div>
+
+        <div class="campo-filtro">
+          <label for="orden-precio">Ordenar por precio</label>
+          <select id="orden-precio">
+            <option value="">Predeterminado</option>
+            <option value="menor-mayor">Menor a mayor</option>
+            <option value="mayor-menor">Mayor a menor</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn-aplicar" onclick="aplicarFiltros()">Aplicar</button>
+      </div>
+    </section>
+
+    <div class="grid-casas" id="grid-catalogo"></div>
+    <div id="mensaje-vacio"></div>
+  </main>
+
+  <footer class="barra-contacto">
+    <p>
+      Contacto: <span>Tel / WhatsApp: +52 868 797 3665</span> | <span>Facebook: CasaMia</span>
+    </p>
+  </footer>
+
+  <script src="inventario.js"></script>
+  <script>
+    let estadoAplicado = {
+      texto: "",
+      precio: "",
+      recamaras: "",
+      pago: "",
+      orden: ""
+    };
+
+    function extraerPrecioNumerico(precioTexto) {
+      if (!precioTexto) return 0;
+      const limpio = String(precioTexto).replace(/[^0-9.]/g, "");
+      const valor = parseFloat(limpio);
+      return Number.isNaN(valor) ? 0 : valor;
+    }
+
+    function extraerNumeroRecamaras(recamarasTexto) {
+      if (!recamarasTexto) return null;
+      const match = String(recamarasTexto).match(/\d+/);
+      return match ? parseInt(match[0], 10) : null;
+    }
+
+    function cumpleRangoPrecio(precioNum, rango) {
+      if (!rango) return true;
+      if (rango === "1m-1.5m") return precioNum >= 1000000 && precioNum <= 1500000;
+      if (rango === "1.6m-2.5m") return precioNum >= 1600000 && precioNum <= 2500000;
+      if (rango === "2.6m-3.5m") return precioNum >= 2600000 && precioNum <= 3500000;
+      if (rango === "3.5m-plus") return precioNum > 3500000;
+      return true;
+    }
+
+    function cumpleMetodoPago(casa, metodoSeleccionado) {
+      if (!metodoSeleccionado) return true;
+      const lista = Array.isArray(casa.creditos) ? casa.creditos : [];
+      return lista.some((item) => item.toLowerCase().includes(metodoSeleccionado.toLowerCase()));
+    }
+
+    function cumpleTexto(id, casa, textoBuscado) {
+      if (!textoBuscado) return true;
+      const q = textoBuscado.trim().toLowerCase();
+      const extrasTexto = Array.isArray(casa.extras) ? casa.extras.join(" ") : "";
+      const creditosTexto = Array.isArray(casa.creditos) ? casa.creditos.join(" ") : "";
+      const conjunto = [
+        id,
+        casa.nombre,
+        casa.estadoEtiqueta,
+        casa.ubicacion,
+        casa.precio,
+        casa.recamaras,
+        casa.banos,
+        casa.medidas,
+        casa.cochera,
+        casa.descripcion,
+        extrasTexto,
+        creditosTexto
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return conjunto.includes(q);
+    }
+
+    function hayFiltrosActivos() {
+      return Boolean(
+        estadoAplicado.texto.trim() !== "" ||
+        estadoAplicado.precio !== "" ||
+        estadoAplicado.recamaras !== "" ||
+        estadoAplicado.pago !== "" ||
+        estadoAplicado.orden !== ""
+      );
+    }
+
+    function actualizarBotonesEstado() {
+      const btnBorrar = document.getElementById("btn-borrar-filtros");
+      if (hayFiltrosActivos()) {
+        btnBorrar.classList.add("visible");
+      } else {
+        btnBorrar.classList.remove("visible");
+      }
+    }
+
+    function aplicarFiltros() {
+      estadoAplicado = {
+        texto: document.getElementById("filtro-texto").value,
+        precio: document.getElementById("filtro-precio").value,
+        recamaras: document.getElementById("filtro-recamaras").value,
+        pago: document.getElementById("filtro-pago").value,
+        orden: document.getElementById("orden-precio").value
+      };
+
+      actualizarBotonesEstado();
+      renderizarCatalogo();
+    }
+
+    function borrarTodosLosFiltros() {
+      document.getElementById("filtro-texto").value = "";
+      document.getElementById("filtro-precio").value = "";
+      document.getElementById("filtro-recamaras").value = "";
+      document.getElementById("filtro-pago").value = "";
+      document.getElementById("orden-precio").value = "";
+
+      estadoAplicado = {
+        texto: "",
+        precio: "",
+        recamaras: "",
+        pago: "",
+        orden: ""
+      };
+
+      actualizarBotonesEstado();
+      renderizarCatalogo();
+    }
+
+    function manejarEnterFiltro(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        aplicarFiltros();
+      }
+    }
+
+    function obtenerPropiedadesFiltradasYOrdenadas() {
+      const entradas = Object.entries(INVENTARIO_CASAS);
+      const recDeseadas = estadoAplicado.recamaras ? parseInt(estadoAplicado.recamaras, 10) : null;
+
+      let filtradas = entradas.filter(([id, casa]) => {
+        const precioNum = extraerPrecioNumerico(casa.precio);
+        const recNum = extraerNumeroRecamaras(casa.recamaras);
+
+        const okTexto = cumpleTexto(id, casa, estadoAplicado.texto);
+        const okPrecio = cumpleRangoPrecio(precioNum, estadoAplicado.precio);
+        const okRecamaras = recDeseadas === null ? true : recNum === recDeseadas;
+        const okPago = cumpleMetodoPago(casa, estadoAplicado.pago);
+
+        return okTexto && okPrecio && okRecamaras && okPago;
+      });
+
+      if (estadoAplicado.orden === "menor-mayor") {
+        filtradas.sort(([, a], [, b]) => extraerPrecioNumerico(a.precio) - extraerPrecioNumerico(b.precio));
+      } else if (estadoAplicado.orden === "mayor-menor") {
+        filtradas.sort(([, a], [, b]) => extraerPrecioNumerico(b.precio) - extraerPrecioNumerico(a.precio));
+      }
+
+      return filtradas;
+    }
+
+    function renderizarCatalogo() {
+      const grid = document.getElementById("grid-catalogo");
+      const vacioBox = document.getElementById("mensaje-vacio");
+      const contador = document.getElementById("contador-propiedades");
+
+      grid.innerHTML = "";
+      vacioBox.innerHTML = "";
+
+      const propiedades = obtenerPropiedadesFiltradasYOrdenadas();
+
+      contador.textContent = `Mostrando ${propiedades.length} ${propiedades.length === 1 ? "propiedad" : "propiedades"}`;
+
+      if (propiedades.length === 0) {
+        vacioBox.innerHTML = `
+          <div class="sin-resultados">
+            <h3>No se encontraron propiedades con esos filtros</h3>
+            <p>Intenta cambiar el texto, el rango de precio o haz clic en <strong>Borrar todos los filtros</strong>.</p>
+          </div>
+        `;
+        return;
+      }
+
+      propiedades.forEach(([id, casa]) => {
+        const fotoPortada = (casa.galeria && casa.galeria[0])
+          ? casa.galeria[0].src
+          : "imagenes/presentacion.jpeg";
+
+        const creditosRapidos = (casa.creditos && casa.creditos.length > 0)
+          ? casa.creditos.join(" · ")
+          : "Consultar opciones";
+
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "tarjeta-casa";
+
+        tarjeta.innerHTML = `
+          <div class="portada-casa">
+            <span class="etiqueta-estado">${casa.estadoEtiqueta || "Disponible"}</span>
+            <img src="${fotoPortada}" alt="${casa.nombre}" />
+          </div>
+          <div class="info-casa">
+            <div>
+              <div class="precio">${casa.precio}</div>
+              <div class="titulo-casa">${casa.nombre}</div>
+              <div class="ubicacion-corta">${casa.ubicacion}</div>
+              <div class="resumen-ficha">
+                <span class="pill-dato">${casa.recamaras}</span>
+                <span class="pill-dato">${casa.banos}</span>
+                <span class="pill-dato">${casa.medidas}</span>
+                <span class="pill-dato">${casa.cochera}</span>
+              </div>
+              <div class="pagos-resumen">
+                <strong>Créditos / Pagos:</strong> ${creditosRapidos}
+              </div>
+            </div>
+            <a href="Principal.html?id=${encodeURIComponent(id)}" class="btn-visualizar">VISUALIZAR</a>
+          </div>
+        `;
+
+        grid.appendChild(tarjeta);
+      });
+    }
+
+    actualizarBotonesEstado();
+    renderizarCatalogo();
+  </script>
+</body>
+</html>
