@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casa Mia | Detalle de Propiedad</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("imagenes/fondo-casa.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #ffffff;
+      padding-bottom: 85px;
+    }
+
+    /* Barra superior */
+    .barra-superior {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background-color: rgba(20, 20, 20, 0.88);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 30px;
+      border-bottom: 2px solid #1b7a3d;
+      z-index: 30;
+    }
+
+    .marca {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .menu-apartados {
+      display: flex;
+      gap: 18px;
+    }
+
+    .menu-apartados a {
+      color: #f0f0f0;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .menu-apartados a:hover {
+      background-color: #1b7a3d;
+      color: #ffffff;
+    }
+
+    /* Contenedor Principal */
+    .contenedor {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .btn-volver {
+      display: inline-block;
+      background-color: rgba(20, 20, 20, 0.88);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid #1b7a3d;
+      margin-bottom: 20px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-volver:hover {
+      background-color: #1b7a3d;
+    }
+
+    .ficha-propiedad {
+      background-color: rgba(255, 255, 255, 0.96);
+      color: #222222;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .encabezado-propiedad {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .etiqueta-estado {
+      display: inline-block;
+      background-color: #1b7a3d;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .encabezado-propiedad h1 {
+      font-size: 28px;
+      color: #111111;
+      margin-bottom: 6px;
+    }
+
+    .ubicacion {
+      font-size: 15px;
+      color: #555555;
+    }
+
+    .bloque-precio {
+      text-align: right;
+    }
+
+    .precio-principal {
+      font-size: 30px;
+      font-weight: bold;
+      color: #1b7a3d;
+    }
+
+    .subprecio {
+      font-size: 13px;
+      color: #444444;
+      margin-top: 4px;
+    }
+
+    /* Galería */
+    .galeria-contenedor {
+      margin-bottom: 26px;
+    }
+
+    .imagen-principal-box {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background-color: #e6eaee;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .imagen-principal-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pie-foto {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background-color: rgba(20, 20, 20, 0.8);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .miniaturas {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .miniatura {
+      width: 95px;
+      height: 68px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid transparent;
+      opacity: 0.75;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+
+    .miniatura:hover,
+    .miniatura.activa {
+      opacity: 1;
+      border-color: #1b7a3d;
+    }
+
+    .miniatura img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Datos Rápidos */
+    .grid-datos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .dato-item {
+      background-color: #f0f5f2;
+      border: 1px solid #cce0d3;
+      padding: 14px 16px;
+      border-radius: 10px;
+    }
+
+    .dato-item span {
+      display: block;
+      font-size: 11px;
+      font-weight: bold;
+      color: #1b7a3d;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .dato-item strong {
+      font-size: 15px;
+      color: #111111;
+    }
+
+    .seccion-detalle {
+      margin-bottom: 24px;
+    }
+
+    .seccion-detalle h2 {
+      font-size: 19px;
+      color: #1b7a3d;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #e8f0eb;
+      padding-bottom: 6px;
+    }
+
+    .seccion-detalle p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333333;
+    }
+
+    .columnas-listas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .lista-items {
+      list-style: none;
+    }
+
+    .lista-items li {
+      padding: 8px 0 8px 20px;
+      position: relative;
+      font-size: 14px;
+      color: #333333;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .lista-items li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #1b7a3d;
+      font-weight: bold;
+    }
+
+    .no-encontrada {
+      background-color: rgba(255, 255, 255, 0.96);
+      color: #222222;
+      padding: 40px 24px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .no-encontrada h2 {
+      margin-bottom: 10px;
+      color: #111111;
+    }
+
+    /* Footer */
+    .barra-contacto {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(4px);
+      color: #111111;
+      text-align: center;
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.9);
+      z-index: 25;
+    }
+
+    .barra-contacto p {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .barra-contacto span {
+      font-weight: normal;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 768px) {
+      .imagen-principal-box {
+        height: 270px;
+      }
+      .bloque-precio {
+        text-align: left;
+      }
+      .columnas-listas {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="barra-superior">
+    <a href="index.html" class="marca">Casa Mia</a>
+    <nav class="menu-apartados">
+      <a href="index.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="contenedor">
+    <a href="index.html" class="btn-volver">← Volver al Catálogo</a>
+    <div id="contenido-propiedad"></div>
+  </main>
+
+  <footer class="barra-contacto">
+    <p>
+      Contacto: <span>Tel / WhatsApp: +52 868 797 3665</span> | <span>Facebook: CasaMia</span>
+    </p>
+  </footer>
+
+  <script src="inventario.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const idPropiedad = params.get("id");
+    const contenedor = document.getElementById("contenido-propiedad");
+    const casa = idPropiedad && INVENTARIO_CASAS[idPropiedad] ? INVENTARIO_CASAS[idPropiedad] : null;
+
+    if (!casa) {
+      contenedor.innerHTML = `
+        <div class="no-encontrada">
+          <h2>Propiedad no encontrada</h2>
+          <p>Selecciona una propiedad desde el catálogo principal para ver su información.</p>
+        </div>
+      `;
+    } else {
+      document.title = `Casa Mia | ${casa.nombre}`;
+      const galeria = Array.isArray(casa.galeria) && casa.galeria.length > 0
+        ? casa.galeria
+        : [{ src: "imagenes/presentacion.jpeg", texto: "Vista principal" }];
+
+      const miniaturasHtml = galeria.length > 1
+        ? `<div class="miniaturas">
+            ${galeria.map((foto, idx) => `
+              <div class="miniatura ${idx === 0 ? "activa" : ""}" onclick="cambiarFoto('${foto.src}', '${foto.texto}', this)">
+                <img src="${foto.src}" alt="${foto.texto}" />
+              </div>
+            `).join("")}
+          </div>`
+        : "";
+
+      const extrasHtml = (casa.extras || []).map((item) => `<li>${item}</li>`).join("");
+      const creditosHtml = (casa.creditos || []).map((item) => `<li>${item}</li>`).join("");
+
+      contenedor.innerHTML = `
+        <article class="ficha-propiedad">
+          <div class="encabezado-propiedad">
+            <div>
+              <span class="etiqueta-estado">${casa.estadoEtiqueta || "Disponible"}</span>
+              <h1>${casa.nombre}</h1>
+              <p class="ubicacion">${casa.ubicacion}</p>
+            </div>
+            <div class="bloque-precio">
+              <div class="precio-principal">${casa.precio}</div>
+              <div class="subprecio">${casa.subprecio || ""}</div>
+            </div>
+          </div>
+
+          <div class="galeria-contenedor">
+            <div class="imagen-principal-box">
+              <img id="foto-grande" src="${galeria[0].src}" alt="${casa.nombre}" />
+              <span class="pie-foto" id="texto-foto">${galeria[0].texto || ""}</span>
+            </div>
+            ${miniaturasHtml}
+          </div>
+
+          <div class="grid-datos">
+            <div class="dato-item">
+              <span>Recámaras</span>
+              <strong>${casa.recamaras}</strong>
+            </div>
+            <div class="dato-item">
+              <span>Baños</span>
+              <strong>${casa.banos}</strong>
+            </div>
+            <div class="dato-item">
+              <span>Medidas</span>
+              <strong>${casa.medidas}</strong>
+            </div>
+            <div class="dato-item">
+              <span>Cochera</span>
+              <strong>${casa.cochera}</strong>
+            </div>
+          </div>
+
+          <div class="seccion-detalle">
+            <h2>Descripción</h2>
+            <p>${casa.descripcion}</p>
+          </div>
+
+          <div class="columnas-listas">
+            <div class="seccion-detalle">
+              <h2>Características</h2>
+              <ul class="lista-items">${extrasHtml}</ul>
+            </div>
+            <div class="seccion-detalle">
+              <h2>Créditos y Formas de Pago</h2>
+              <ul class="lista-items">${creditosHtml}</ul>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function cambiarFoto(src, texto, elemento) {
+      document.getElementById("foto-grande").src = src;
+      document.getElementById("texto-foto").textContent = texto;
+      document.querySelectorAll(".miniatura").forEach((m) => m.classList.remove("activa"));
+      elemento.classList.add("activa");
+    }
+  </script>
+</body>
+</html>
