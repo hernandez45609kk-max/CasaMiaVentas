@@ -14,12 +14,12 @@
 
     body {
       min-height: 100vh;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("imagenes/fondo-casa.jpeg");
+      background-image: linear-gradient(rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.48)), url("imagenes/fondo-casa.jpeg");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       color: #ffffff;
-      padding-bottom: 85px;
+      padding-bottom: 90px;
     }
 
     /* Barra superior */
@@ -60,242 +60,258 @@
       transition: background-color 0.2s;
     }
 
-    .menu-apartados a:hover {
+    .menu-apartados a:hover,
+    .menu-apartados a.activo {
       background-color: #1b7a3d;
       color: #ffffff;
     }
 
-    /* Contenedor Principal */
-    .contenedor {
-      max-width: 1100px;
-      margin: 35px auto;
+    /* Contenedor principal */
+    .contenedor-detalle {
+      max-width: 1160px;
+      margin: 28px auto;
       padding: 0 20px;
     }
 
-    .btn-volver {
+    .btn-volver-catalogo {
       display: inline-block;
-      background-color: rgba(20, 20, 20, 0.88);
-      color: #ffffff;
+      margin-bottom: 16px;
+      background-color: rgba(255, 255, 255, 0.92);
+      color: #111111;
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
-      padding: 10px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
-      border: 1px solid #1b7a3d;
-      margin-bottom: 20px;
-      transition: background-color 0.2s;
     }
 
-    .btn-volver:hover {
-      background-color: #1b7a3d;
+    .btn-volver-catalogo:hover {
+      background-color: #ffffff;
     }
 
-    .ficha-propiedad {
+    .tarjeta-propiedad {
       background-color: rgba(255, 255, 255, 0.96);
       color: #222222;
-      border-radius: 14px;
-      padding: 28px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
     }
 
-    .encabezado-propiedad {
+    /* Zona superior: Foto grande a la izquierda + Galería a la derecha */
+    .zona-visual {
+      display: grid;
+      grid-template-columns: 1.75fr 1fr;
+      gap: 22px;
+      margin-bottom: 26px;
+      align-items: start;
+    }
+
+    .foto-grande-marco {
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #e6eaee;
+      height: 430px;
+      border: 2px solid #dcdcdc;
+    }
+
+    .foto-grande-marco img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .galeria-lateral {
+      background-color: #f4f7f5;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #dce6df;
+    }
+
+    .galeria-lateral h3 {
+      font-size: 15px;
+      color: #1b7a3d;
+      margin-bottom: 4px;
+    }
+
+    .galeria-lateral p.ayuda-zoom {
+      font-size: 12px;
+      color: #555555;
+      margin-bottom: 14px;
+    }
+
+    .grid-fotos-extra {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      overflow: visible;
+    }
+
+    /* Miniatura que crece al pasar el mouse encima */
+    .miniatura-zoom {
+      position: relative;
+      height: 145px;
+      border-radius: 10px;
+      border: 3px solid transparent;
+      background-color: #ffffff;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.2s;
+      z-index: 1;
+    }
+
+    .miniatura-zoom img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 7px;
+      display: block;
+    }
+
+    .miniatura-zoom.activa {
+      border-color: #1b7a3d;
+    }
+
+    .miniatura-zoom:hover {
+      transform: scale(1.65);
+      z-index: 50;
+      border-color: #1b7a3d;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .pie-miniatura {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.72);
+      color: #ffffff;
+      font-size: 11px;
+      padding: 4px 6px;
+      text-align: center;
+      border-bottom-left-radius: 7px;
+      border-bottom-right-radius: 7px;
+      pointer-events: none;
+    }
+
+    /* Cabecera: Nombre, ubicación y precio */
+    .cabecera-casa {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
       gap: 16px;
-      border-bottom: 1px solid #e0e0e0;
       padding-bottom: 20px;
-      margin-bottom: 24px;
+      border-bottom: 1px solid #e2e2e2;
+      margin-bottom: 22px;
     }
 
-    .etiqueta-estado {
-      display: inline-block;
-      background-color: #1b7a3d;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 5px 12px;
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-
-    .encabezado-propiedad h1 {
-      font-size: 28px;
+    .cabecera-casa h1 {
+      font-size: 30px;
       color: #111111;
       margin-bottom: 6px;
     }
 
-    .ubicacion {
+    .ubicacion-casa {
       font-size: 15px;
-      color: #555555;
+      color: #444444;
+      font-weight: bold;
     }
 
-    .bloque-precio {
+    .caja-precio {
       text-align: right;
     }
 
-    .precio-principal {
+    .caja-precio .precio-valor {
       font-size: 30px;
       font-weight: bold;
       color: #1b7a3d;
     }
 
-    .subprecio {
+    .caja-precio .precio-sub {
       font-size: 13px;
-      color: #444444;
-      margin-top: 4px;
+      color: #666666;
     }
 
-    /* Galería */
-    .galeria-contenedor {
-      margin-bottom: 26px;
-    }
-
-    .imagen-principal-box {
-      position: relative;
-      width: 100%;
-      height: 440px;
-      background-color: #e6eaee;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 12px;
-    }
-
-    .imagen-principal-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .pie-foto {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      background-color: rgba(20, 20, 20, 0.8);
-      color: #ffffff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .miniaturas {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .miniatura {
-      width: 95px;
-      height: 68px;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 3px solid transparent;
-      opacity: 0.75;
-      transition: opacity 0.2s, border-color 0.2s;
-    }
-
-    .miniatura:hover,
-    .miniatura.activa {
-      opacity: 1;
-      border-color: #1b7a3d;
-    }
-
-    .miniatura img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Datos Rápidos */
+    /* Datos técnicos */
     .grid-datos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
       margin-bottom: 24px;
     }
 
-    .dato-item {
-      background-color: #f0f5f2;
-      border: 1px solid #cce0d3;
+    .ficha-dato {
+      background-color: #f4f7f5;
+      border-left: 4px solid #1b7a3d;
       padding: 14px 16px;
-      border-radius: 10px;
+      border-radius: 8px;
     }
 
-    .dato-item span {
+    .ficha-dato span {
       display: block;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
       color: #1b7a3d;
       text-transform: uppercase;
       margin-bottom: 4px;
     }
 
-    .dato-item strong {
+    .ficha-dato strong {
       font-size: 15px;
-      color: #111111;
+      color: #222222;
+      line-height: 1.4;
+      display: block;
     }
 
-    .seccion-detalle {
-      margin-bottom: 24px;
+    /* Info completa y Créditos aplicables */
+    .grid-info-creditos {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 22px;
     }
 
-    .seccion-detalle h2 {
+    .panel-detalle {
+      background-color: #fafafa;
+      border: 1px solid #e4e4e4;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .panel-detalle h2 {
       font-size: 19px;
       color: #1b7a3d;
-      margin-bottom: 10px;
-      border-bottom: 2px solid #e8f0eb;
-      padding-bottom: 6px;
+      margin-bottom: 12px;
     }
 
-    .seccion-detalle p {
+    .panel-detalle p {
       font-size: 15px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: #333333;
+      margin-bottom: 14px;
     }
 
-    .columnas-listas {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .lista-items {
-      list-style: none;
-    }
-
-    .lista-items li {
-      padding: 8px 0 8px 20px;
-      position: relative;
+    .lista-caracteristicas {
+      padding-left: 18px;
+      color: #333333;
       font-size: 14px;
-      color: #333333;
-      border-bottom: 1px solid #eeeeee;
+      line-height: 1.7;
     }
 
-    .lista-items li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: #1b7a3d;
+    .lista-creditos {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lista-creditos li {
+      background-color: #eef6f0;
+      border: 1px solid #c4decb;
+      color: #145e2e;
       font-weight: bold;
-    }
-
-    .no-encontrada {
-      background-color: rgba(255, 255, 255, 0.96);
-      color: #222222;
-      padding: 40px 24px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    }
-
-    .no-encontrada h2 {
-      margin-bottom: 10px;
-      color: #111111;
+      font-size: 14px;
+      padding: 11px 14px;
+      border-radius: 8px;
     }
 
     /* Footer */
@@ -323,15 +339,22 @@
       margin: 0 10px;
     }
 
-    @media (max-width: 768px) {
-      .imagen-principal-box {
-        height: 270px;
+    @media (max-width: 900px) {
+      .zona-visual,
+      .grid-info-creditos {
+        grid-template-columns: 1fr;
       }
-      .bloque-precio {
+
+      .foto-grande-marco {
+        height: 290px;
+      }
+
+      .caja-precio {
         text-align: left;
       }
-      .columnas-listas {
-        grid-template-columns: 1fr;
+
+      .miniatura-zoom:hover {
+        transform: scale(1.25);
       }
     }
   </style>
@@ -341,120 +364,142 @@
   <header class="barra-superior">
     <a href="index.html" class="marca">Casa Mia</a>
     <nav class="menu-apartados">
-      <a href="index.html">Catálogo</a>
+      <a href="index.html" class="activo">Catálogo</a>
     </nav>
   </header>
 
-  <main class="contenedor">
-    <a href="index.html" class="btn-volver">← Volver al Catálogo</a>
-    <div id="contenido-propiedad"></div>
+  <main class="contenedor-detalle">
+    <a href="index.html" class="btn-volver-catalogo">← Volver al Catálogo</a>
+
+    <section class="tarjeta-propiedad">
+      <!-- Foto grande + Galería donde al pasar el mouse se agranda -->
+      <div class="zona-visual">
+        <div class="foto-grande-marco">
+          <img id="foto-grande" src="" alt="Foto grande de la casa" />
+        </div>
+
+        <aside class="galeria-lateral">
+          <h3>Galería de la propiedad</h3>
+          <p class="ayuda-zoom">Pasa el mouse para agrandar o haz clic para ponerla en grande.</p>
+          <div class="grid-fotos-extra" id="contenedor-galeria"></div>
+        </aside>
+      </div>
+
+      <!-- Precio y título -->
+      <div class="cabecera-casa">
+        <div>
+          <h1 id="casa-nombre">Cargando propiedad...</h1>
+          <p class="ubicacion-casa" id="casa-ubicacion"></p>
+        </div>
+        <div class="caja-precio">
+          <div class="precio-valor" id="casa-precio"></div>
+          <div class="precio-sub" id="casa-subprecio"></div>
+        </div>
+      </div>
+
+      <!-- Ficha técnica -->
+      <div class="grid-datos">
+        <div class="ficha-dato">
+          <span>Recámaras</span>
+          <strong id="casa-recamaras"></strong>
+        </div>
+        <div class="ficha-dato">
+          <span>Baños</span>
+          <strong id="casa-banos"></strong>
+        </div>
+        <div class="ficha-dato">
+          <span>Medidas</span>
+          <strong id="casa-medidas"></strong>
+        </div>
+        <div class="ficha-dato">
+          <span>Cochera</span>
+          <strong id="casa-cochera"></strong>
+        </div>
+      </div>
+
+      <!-- Información completa + Créditos a los que aplica -->
+      <div class="grid-info-creditos">
+        <div class="panel-detalle">
+          <h2>Información completa de la casa</h2>
+          <p id="casa-descripcion"></p>
+          <ul class="lista-caracteristicas" id="casa-extras"></ul>
+        </div>
+
+        <div class="panel-detalle">
+          <h2>Créditos y pagos a los que aplica</h2>
+          <ul class="lista-creditos" id="casa-creditos"></ul>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="barra-contacto">
     <p>
-      Contacto: <span>Tel / WhatsApp: +52 868 797 3665</span> | <span>Facebook: CasaMia</span>
+      Contacto: <span>Tel / WhatsApp: +52 868 797 3665</span> | <span>Facebook: CasaMia</span> | <span>Horario: Lun - Sáb 9:00 AM - 6:00 PM</span>
     </p>
   </footer>
 
   <script src="inventario.js"></script>
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const idPropiedad = params.get("id");
-    const contenedor = document.getElementById("contenido-propiedad");
-    const casa = idPropiedad && INVENTARIO_CASAS[idPropiedad] ? INVENTARIO_CASAS[idPropiedad] : null;
+    function renderizarCasa() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const casa = INVENTARIO_CASAS[id] || INVENTARIO_CASAS["casa-arboledas1"];
 
-    if (!casa) {
-      contenedor.innerHTML = `
-        <div class="no-encontrada">
-          <h2>Propiedad no encontrada</h2>
-          <p>Selecciona una propiedad desde el catálogo principal para ver su información.</p>
-        </div>
-      `;
-    } else {
-      document.title = `Casa Mia | ${casa.nombre}`;
-      const galeria = Array.isArray(casa.galeria) && casa.galeria.length > 0
-        ? casa.galeria
-        : [{ src: "imagenes/presentacion.jpeg", texto: "Vista principal" }];
+      document.title = "Casa Mia | " + casa.nombre;
+      document.getElementById("casa-nombre").textContent = casa.nombre;
+      document.getElementById("casa-ubicacion").textContent = "Ubicación: " + casa.ubicacion;
+      document.getElementById("casa-precio").textContent = casa.precio;
+      document.getElementById("casa-subprecio").textContent = casa.subprecio;
+      document.getElementById("casa-recamaras").textContent = casa.recamaras;
+      document.getElementById("casa-banos").textContent = casa.banos;
+      document.getElementById("casa-medidas").textContent = casa.medidas;
+      document.getElementById("casa-cochera").textContent = casa.cochera;
+      document.getElementById("casa-descripcion").textContent = casa.descripcion;
 
-      const miniaturasHtml = galeria.length > 1
-        ? `<div class="miniaturas">
-            ${galeria.map((foto, idx) => `
-              <div class="miniatura ${idx === 0 ? "activa" : ""}" onclick="cambiarFoto('${foto.src}', '${foto.texto}', this)">
-                <img src="${foto.src}" alt="${foto.texto}" />
-              </div>
-            `).join("")}
-          </div>`
-        : "";
+      const ulExtras = document.getElementById("casa-extras");
+      ulExtras.innerHTML = "";
+      casa.extras.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ulExtras.appendChild(li);
+      });
 
-      const extrasHtml = (casa.extras || []).map((item) => `<li>${item}</li>`).join("");
-      const creditosHtml = (casa.creditos || []).map((item) => `<li>${item}</li>`).join("");
+      const ulCreditos = document.getElementById("casa-creditos");
+      ulCreditos.innerHTML = "";
+      casa.creditos.forEach((credito) => {
+        const li = document.createElement("li");
+        li.textContent = "✓ " + credito;
+        ulCreditos.appendChild(li);
+      });
 
-      contenedor.innerHTML = `
-        <article class="ficha-propiedad">
-          <div class="encabezado-propiedad">
-            <div>
-              <span class="etiqueta-estado">${casa.estadoEtiqueta || "Disponible"}</span>
-              <h1>${casa.nombre}</h1>
-              <p class="ubicacion">${casa.ubicacion}</p>
-            </div>
-            <div class="bloque-precio">
-              <div class="precio-principal">${casa.precio}</div>
-              <div class="subprecio">${casa.subprecio || ""}</div>
-            </div>
-          </div>
+      const fotoGrande = document.getElementById("foto-grande");
+      const galeriaBox = document.getElementById("contenedor-galeria");
+      galeriaBox.innerHTML = "";
 
-          <div class="galeria-contenedor">
-            <div class="imagen-principal-box">
-              <img id="foto-grande" src="${galeria[0].src}" alt="${casa.nombre}" />
-              <span class="pie-foto" id="texto-foto">${galeria[0].texto || ""}</span>
-            </div>
-            ${miniaturasHtml}
-          </div>
+      if (casa.galeria && casa.galeria.length > 0) {
+        fotoGrande.src = casa.galeria[0].src;
+        fotoGrande.alt = casa.galeria[0].texto;
 
-          <div class="grid-datos">
-            <div class="dato-item">
-              <span>Recámaras</span>
-              <strong>${casa.recamaras}</strong>
-            </div>
-            <div class="dato-item">
-              <span>Baños</span>
-              <strong>${casa.banos}</strong>
-            </div>
-            <div class="dato-item">
-              <span>Medidas</span>
-              <strong>${casa.medidas}</strong>
-            </div>
-            <div class="dato-item">
-              <span>Cochera</span>
-              <strong>${casa.cochera}</strong>
-            </div>
-          </div>
-
-          <div class="seccion-detalle">
-            <h2>Descripción</h2>
-            <p>${casa.descripcion}</p>
-          </div>
-
-          <div class="columnas-listas">
-            <div class="seccion-detalle">
-              <h2>Características</h2>
-              <ul class="lista-items">${extrasHtml}</ul>
-            </div>
-            <div class="seccion-detalle">
-              <h2>Créditos y Formas de Pago</h2>
-              <ul class="lista-items">${creditosHtml}</ul>
-            </div>
-          </div>
-        </article>
-      `;
+        casa.galeria.forEach((foto, index) => {
+          const thumb = document.createElement("div");
+          thumb.className = "miniatura-zoom" + (index === 0 ? " activa" : "");
+          thumb.innerHTML = `
+            <img src="${foto.src}" alt="${foto.texto}" />
+            <span class="pie-miniatura">${foto.texto}</span>
+          `;
+          thumb.addEventListener("click", () => {
+            fotoGrande.src = foto.src;
+            fotoGrande.alt = foto.texto;
+            document.querySelectorAll(".miniatura-zoom").forEach((el) => el.classList.remove("activa"));
+            thumb.classList.add("activa");
+          });
+          galeriaBox.appendChild(thumb);
+        });
+      }
     }
 
-    function cambiarFoto(src, texto, elemento) {
-      document.getElementById("foto-grande").src = src;
-      document.getElementById("texto-foto").textContent = texto;
-      document.querySelectorAll(".miniatura").forEach((m) => m.classList.remove("activa"));
-      elemento.classList.add("activa");
-    }
+    renderizarCasa();
   </script>
 </body>
 </html>
