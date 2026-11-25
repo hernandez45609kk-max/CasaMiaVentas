@@ -65,5 +65,79 @@ const INVENTARIO_CASAS = {
       { src: "imagenes/Arboleda1.FOTO5.jpeg", texto: "Interior" },
       { src: "imagenes/Arboleda1.FOTO6.jpeg", texto: "Exterior" }
     ]
+  },
+
+  "casa-bagdad1": {
+    nombre: "Casa Nueva en Venta en Fracc. Bagdad (2 Recámaras)",
+    estadoEtiqueta: "¡CASA NUEVA!",
+    ubicacion: "Fracc. Bagdad, Ciudad Industrial · Citas al 868 797 3665",
+    mapsUrl: "https://maps.app.goo.gl/nZY36rPqd7ryqpR59",
+    precio: "$1,460,000 MXN",
+    subprecio: "¡Aplica Infonavit Total, Bancario y Contado! · Citas: 868 797 3665",
+    recamaras: "2 Recámaras",
+    banos: "1.5 Baños",
+    medidas: "Terreno: 7 x 15 m",
+    cochera: "Consultar al agendar cita",
+    descripcion: "Casa nueva en venta en Fracc. Bagdad, zona Ciudad Industrial, equipada con vitropiso y rejas de protección. Cuenta con 2 recámaras, 1.5 baños y espacio para sala, comedor y cocina. Agenda tu cita al 868 797 3665.",
+    extras: [
+      "2 recámaras",
+      "1.5 baños",
+      "Espacio para sala, comedor y cocina",
+      "Rejas de protección instaladas",
+      "Acabados con vitropiso",
+      "Terreno de 7 x 15 m",
+      "Ubicación en Ciudad Industrial: https://maps.app.goo.gl/nZY36rPqd7ryqpR59",
+      "Citas e informes: 868 797 3665"
+    ],
+    creditos: [
+      "Crédito Infonavit Total",
+      "Crédito Hipotecario Bancario",
+      "Compra de Contado"
+    ],
+    galeria: [
+      { src: "imagenes/Bagdad1.Frente.jpeg", texto: "Frente" },
+      { src: "imagenes/Bagdad1.FOTO1.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad1.FOTO2.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad1.FOTO3.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad1.FOTO4.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad1.FOTO5.jpeg", texto: "Exterior" }
+    ]
+  },
+
+  "casa-bagdad2": {
+    nombre: "Casa Nueva en Venta en Fracc. Bagdad (3 Recámaras)",
+    estadoEtiqueta: "¡CASA NUEVA!",
+    ubicacion: "Fracc. Bagdad, Ciudad Industrial · Citas al 868 797 3665",
+    mapsUrl: "https://maps.app.goo.gl/nZY36rPqd7ryqpR59",
+    precio: "$1,580,000 MXN",
+    subprecio: "¡Aplica Infonavit Total, Bancario y Contado! · Citas: 868 797 3665",
+    recamaras: "3 Recámaras",
+    banos: "1.5 Baños",
+    medidas: "Terreno: 7 x 15 m",
+    cochera: "Consultar al agendar cita",
+    descripcion: "Casa nueva en venta en Fracc. Bagdad, zona Ciudad Industrial, equipada con vitropiso y rejas de protección. Cuenta con 3 recámaras, 1.5 baños y espacio para sala, comedor y cocina. Agenda tu cita al 868 797 3665.",
+    extras: [
+      "3 recámaras",
+      "1.5 baños",
+      "Espacio para sala, comedor y cocina",
+      "Rejas de protección instaladas",
+      "Acabados con vitropiso",
+      "Terreno de 7 x 15 m",
+      "Ubicación en Ciudad Industrial: https://maps.app.goo.gl/nZY36rPqd7ryqpR59",
+      "Citas e informes: 868 797 3665"
+    ],
+    creditos: [
+      "Crédito Infonavit Total",
+      "Crédito Hipotecario Bancario",
+      "Compra de Contado"
+    ],
+    galeria: [
+      { src: "imagenes/Bagdad2.Frente.jpeg", texto: "Frente" },
+      { src: "imagenes/Bagdad2.FOTO1.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad2.FOTO2.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad2.FOTO3.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad2.FOTO4.jpeg", texto: "Interior" },
+      { src: "imagenes/Bagdad2.FOTO5.jpeg", texto: "Exterior" }
+    ]
   }
 };
